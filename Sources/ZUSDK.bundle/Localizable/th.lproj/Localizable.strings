@@ -1,0 +1,107 @@
+/*
+ Localizable.strings
+ TestLocalization
+ --泰文--
+ Created by Vison
+ Copyright (c) 2021年 Vison. All rights reserved.
+ */
+
+"ACCOUNT_LOGIN_IMPUT_EMAIL" = "อีเมล/ชื่อบัญชี";
+"ACCOUNT_LOGIN_IMPUT_PWD" = "รหัสผ่าน";
+"ACCOUNT_LOGIN_REGISTER_NOW" = "สมัครสมาชิก";
+"ACCOUNT_LOGIN_OTHER_ACCOUNT" = "วิธีการเข้าสู่ระบบเพิ่มเติม";
+"ACCOUNT_LOGIN_DELE_LOGIN_INFO" = "ต้องการลบข้อมูลการเข้าสู่ระบบของบัญชีนี้หรือไม่";
+"ACCOUNT_LOGIN_CANCEL" = "ยกเลิก";
+"ACCOUNT_LOGIN_SURE" = "ยืนยัน";
+"ACCOUNT_LOGIN_REGISTER_EMAIL_PLACEHOLDER" = "กรุณาใส่อีเมลของคุณ";
+"ACCOUNT_LOGIN_REGISTER_PWD_PLACEHOLDER" = "รหัสผ่านต้องมีความยาว 8-20 ตัวอักษร และประกอบด้วยตัวอักษรและตัวเลข";
+"ACCOUNT_LOGIN_REGISTER_PWD_PLACEHOLDER_AGAIN" = "กรุณายืนยันรหัสผ่านอีกครั้ง";
+"ACCOUNT_LOGIN_REGISTER_REGISTERANDLOGIN" = "สมัครสมาชิกและเข้าสู่ระบบ";
+"ACCOUNT_LOGIN_REGISTER_IMPUT_ENABLE_EAMIL" = "กรุณาใส่อีเมลที่ถูกต้อง";
+"ACCOUNT_LOGIN_REGISTER_PWD_TIP" = "รหัสผ่านต้องมีความยาว 8-20 ตัวอักษร";
+"ACCOUNT_LOGIN_REGISTER_PWD_INCONFORMITY_TIP" = "รหัสผ่านทั้งสองช่องไม่ตรงกัน กรุณาใส่ใหม่อีกครั้ง";
+"ACCOUNT_LOGIN_SPECIAL_CHAR_TIP" = "รหัสผ่านมีอักขระพิเศษที่ไม่รองรับ";
+"ACCOUNT_LOGIN_Account_FOLLOW_CODE_PLACEHOLDER" = "กรุณาใส่รหัสย้ายข้อมูล";
+"ACCOUNT_LOGIN_Account_LENGTH_NULL" = "บัญชีผู้ใช้ไม่สามารถว่างเปล่าได้ กรุณาใส่ชื่อบัญชี";
+"ACCOUNT_LOGIN_PWD_LENGTH_NULL" = "รหัสผ่านไม่สามารถว่างเปล่าได้ กรุณาใส่รหัสผ่าน";
+
+
+"ACCOUNT_LOGIN_TITLE" = "ล็อกอิน";
+"ACCOUNT_LOGIN_FOLOW_CODE_LOGIN" = "เข้าสู่ระบบด้วยรหัสย้ายข้อมูล";
+
+"ACCOUNT_LOGIN_GUEST_LOGIN" = "เข้าสู่ระบบแบบผู้รับเชิญ";
+"ACCOUNT_LOGIN_EMAIL_LOGIN" = "Sign in with Email";
+"ACCOUNT_LOGIN_ACCPWD_LOGIN" = "Sign in with Account";
+"ACCOUNT_LOGIN_FACEBOOK_LOGIN" = "Sign in with Facebook";
+"ACCOUNT_LOGIN_GOOGLE_LOGIN" = "Sign in with Google";
+"ACCOUNT_LOGIN_GAMECENTER_LOGIN" = "Sign in with GameCenter";
+"ACCOUNT_LOGIN_TWITTER_LOGIN" = "Sign in with Twitter";
+"ACCOUNT_LOGIN_LINE_LOGIN" = "Sign in with Line";
+"ACCOUNT_LOGIN_FOLOWCODE_LOGIN" = "Sign in with Transfer Code";
+"ACCOUNT_LOGIN_APPLE_LOGIN" = "Sign in with Apple";
+"ACCOUNT_LOGIN_WECHAT_LOGIN" = "Sign in with Wechat";
+"ACCOUNT_LOGIN_QQ_LOGIN" = "Sign in with QQ";
+
+
+
+"ACCOUNT_LOGIN_DIVIDING_TEXT" = "วิธีการเข้าสู่ระบบ";
+"ACCOUNT_LOGIN_BINDACCOUNT" = "การผูกบัญชี";
+"ACCOUNT_LOGIN_AUTHORIZATION_ERROR_TIP" = "ยกเลิกการอนุญาตแล้ว";
+"ACCOUNT_AUTHORIZATION_LOGIN_RESULT_ERROR_TIP" = "การอนุญาตเข้าสู่ระบบล้มเหลว กรุณาลองอีกครั้ง";
+"ACCOUNT_AUTHORIZATION_BIND_RESULT_ERROR_TIP" = "การผูกบัญชีด้วยการอนุญาตไม่สำเร็จ กรุณาลองอีกครั้ง";
+"ACCOUNT_LOGIN_BIND_DETAIL" = "เพื่อหลีกเลี่ยงการสูญเสียความคืบหน้าของเกม โปรดผูกวิธีการเข้าสู่ระบบอื่นโดยเร็วที่สุด";
+"ACCOUNT_LOGIN_BIND_GUEST_PRETEXT" = "บัญชีปัจจุบันเป็นบัญชีผู้รับเชิญ ";
+"ACCOUNT_AUTHORIZATION_ONLY_RESULT_ERROR_TIP" = "การอนุญาตไม่สำเร็จ";
+
+"ACCOUNT_LOGIN_BIND_UNBIND_TITLE" = "ผูก";
+"ACCOUNT_LOGIN_BIND_UNBIND_TITLE_CONTENT" = "ไม่ได้ผูก";
+"ACCOUNT_LOGIN_BIND_BINDED_TITLE" = "ได้รับการผูก";
+"ACCOUNT_MORE_LOGIN_TTTLE" = "วิธีการเข้าสู่ระบบเพิ่มเติม";
+"ACCOUNT_LOGIIN_CC_TEXT"   = "รหัสย้ายข้อมูล";
+"ACCOUNT_LOGIIN_WECHAT_TEXT" = "Wechat";
+"ACCOUNT_LOGIIN_QQ_TEXT" = "QQ";
+"ACCOUNT_LOGIIN_FACEBOOK_TEXT" = "Facebook";
+"ACCOUNT_LOGIIN_TWITTER_TEXT"  = "Twitter";
+"ACCOUNT_LOGIIN_LINE_TEXT"  = "LINE";
+"ACCOUNT_LOGIIN_GOOGLE_TEXT"  = "Google";
+"ACCOUNT_LOGIIN_GAMECENTER_TEXT" = "GameCenter";
+"ACCOUNT_LOGIIN_APPLE_TEXT" = "Apple";
+"ACCOUNT_LOGIIN_EMAIL_TEXT" = "อีเมล";
+"ACCOUNT_LOGIIN_GUEST_TEXT" = "ผู้รับเชิญ";
+"ACCOUNT_LOGIIN_ACCPWD_TEXT" = "รหัสผ่าน";
+
+
+"ACCOUNT_LOGIN_DATA_ANOMALY" = "ข้อมูลผิดพลาด";
+"ACCOUNT_LOGIN_DATA_TIME_OUT" = "ล็อกอินหมดเวลา กรุณาลองใหม่อีกครั้งในภายหลัง";
+"ACCOUNT_LOGIN_DATA_CANNOT_RESPONSE" = "โหลดข้อมูลผิดพลาด กรุณาลองอีกครั้ง";
+"ACCOUNT_NETWORK_DATA_ERROR" = "เกิดข้อผิดพลาดที่เครือข่าย กรุณาลองอีกครั้ง";
+"ACCOUNT_WELCOME_GUEST_PLAYER"  = "ยินดีต้อนรับสู่เกม ผู้เล่นรับเชิญ";
+"ACCOUNT_WELCOME_ENTER_GAME"  = "ยินดีต้อนรับสู่เกม";
+"ACCOUNT_EXIT_LOGIN_TEXT"  = "คุณแน่ใจที่จะออกจากระบบหรือไม่?";
+"ACCOUNT_LOGIN_Exit" = "ออกจากระบบ";
+"ACCOUNT_LOGIN_BIND_SURE" = "ยืนยันการผูก";
+"ACCOUNT_LOGIN_DATA_CANCEL_THIRD_LOGIN" = "Cancel login";
+"ACCOUNT_LOGIN_THIRD_USER" = "User";
+"ACCOUNT_BIND_LIST_INFO_GET_TEXT" = "ไม่สามารถดึงข้อมูลการผูกมัดได้ โปรดลองใหม่อีกครั้งในภายหลัง";
+"ACCOUNT_EXCHANGE_ACCOUNT_ALERT_TEXT"  = "คุณแน่ใจว่าต้องการสลับบัญชีหรือไม่?";
+"ACCOUNT_AGREE_PRIVACY_COMPLETE_TEXT" = "ฉันได้อ่านและยอมรับข้อตกลงการให้บริการเกมและนโยบายความเป็นส่วนตัว";
+"ACCOUNT_AGREE_PRIVACY_GAME_CONTRACT" = "ข้อตกลงการให้บริการเกม";
+"ACCOUNT_AGREE_PRIVACY_PRIVACY_POLICY" = "นโยบายความเป็นส่วนตัว";
+"ACCOUNT_AGREE_OVER_14_YEARS_TEXT" = "ฉันอายุเกิน 14 ปี";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_ADULT_TEXT" = "การคลิก \"สมัครสมาชิกและเข้าสู่ระบบ\" แสดงว่าคุณยอมรับข้อตกลงการให้บริการเกมและนโยบายความเป็นส่วนตัว และยืนยันว่าคุณมีอายุ 14 ปีขึ้นไป.";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_TEXT" = "การคลิก \"สมัครสมาชิกและเข้าสู่ระบบ\" แสดงว่าคุณยอมรับข้อตกลงการให้บริการเกมและนโยบายความเป็นส่วนตัว.";
+"ACCOUNT_AGREE_AGREEMENT_BACK_TEXT" = "กลับ";
+"ACCOUNT_LOGIN_TEXT_LINE_CONTENT" = "เข้าสู่ระบบด้วยอีเมล/รหัสผ่าน";
+"ACCOUNT_LOGIN_EMAIL_CODE_LOGIN" = "Log in with email verification code?";
+"ACCOUNT_LOGIN_FORGET_PASSWORD_TEXT" = "ลืมรหัสผ่าน？";
+"ACCOUNT_EXCHANGE_ACCOUNT_ALERT_TEXT"  = "คุณแน่ใจว่าต้องการสลับบัญชีหรือไม่?";
+"ACCOUNT_AGREE_PRIVACY_COMPLETE_TEXT" = "ฉันได้อ่านและยอมรับข้อตกลงการให้บริการเกมและนโยบายความเป็นส่วนตัว";
+"ACCOUNT_AGREE_PRIVACY_GAME_CONTRACT" = "ข้อตกลงการให้บริการเกม";
+"ACCOUNT_AGREE_PRIVACY_PRIVACY_POLICY" = "นโยบายความเป็นส่วนตัว";
+"ACCOUNT_AGREE_OVER_14_YEARS_TEXT" = "ฉันอายุเกิน 14 ปี";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_ADULT_TEXT" = "การคลิก \"สมัครสมาชิกและเข้าสู่ระบบ\" แสดงว่าคุณยอมรับข้อตกลงการให้บริการเกมและนโยบายความเป็นส่วนตัว และยืนยันว่าคุณมีอายุ 14 ปีขึ้นไป.";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_TEXT" = "การคลิก \"สมัครสมาชิกและเข้าสู่ระบบ\" แสดงว่าคุณยอมรับข้อตกลงการให้บริการเกมและนโยบายความเป็นส่วนตัว.";
+"ACCOUNT_AGREE_AGREEMENT_BACK_TEXT" = "กลับ";
+"ACCOUNT_LOGIN_TEXT_LINE_CONTENT" = "เข้าสู่ระบบด้วยอีเมล/รหัสผ่าน";
+"ACCOUNT_LOGIN_EMAIL_CODE_LOGIN" = "Log in with email verification code?";
+"ACCOUNT_LOGIN_FORGET_PASSWORD_TEXT" = "ลืมรหัสผ่าน？";
