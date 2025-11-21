@@ -1,0 +1,107 @@
+/*
+ Localizable.strings
+ TestLocalization
+ --印尼--
+ Created by Vison
+ Copyright (c) 2021年 Vison. All rights reserved.
+ */
+
+"ACCOUNT_LOGIN_IMPUT_EMAIL" = "Email/nama akun";
+"ACCOUNT_LOGIN_IMPUT_PWD" = "Kata Sandi";
+"ACCOUNT_LOGIN_REGISTER_NOW" = "Daftar Sekarang";
+"ACCOUNT_LOGIN_OTHER_ACCOUNT" = "Metode Masuk Lainnya";
+"ACCOUNT_LOGIN_DELE_LOGIN_INFO" = "Apakah Anda ingin menghapus informasi login untuk akun ini?";
+"ACCOUNT_LOGIN_CANCEL" = "Batal";
+"ACCOUNT_LOGIN_SURE" = "Konfirmasi";
+"ACCOUNT_LOGIN_REGISTER_EMAIL_PLACEHOLDER" = "Silakan masukkan email";
+"ACCOUNT_LOGIN_REGISTER_PWD_PLACEHOLDER" = "Kata sandi harus terdiri dari 8-20 karakter, kombinasi huruf dan angka";
+"ACCOUNT_LOGIN_REGISTER_PWD_PLACEHOLDER_AGAIN" = "Silakan masukkan kata sandi lagi";
+"ACCOUNT_LOGIN_REGISTER_REGISTERANDLOGIN" = "Daftar Dan Masuk";
+"ACCOUNT_LOGIN_REGISTER_IMPUT_ENABLE_EAMIL" = "Silakan masukkan email yang valid";
+"ACCOUNT_LOGIN_REGISTER_PWD_TIP" = "Kata sandi harus antara 8-20 karakter";
+"ACCOUNT_LOGIN_REGISTER_PWD_INCONFORMITY_TIP" = "Konfirmasi kata sandi tidak cocok, silakan masukkan lagi";
+"ACCOUNT_LOGIN_SPECIAL_CHAR_TIP" = "Kata sandi berisi karakter khusus yang tidak didukung";
+"ACCOUNT_LOGIN_Account_FOLLOW_CODE_PLACEHOLDER" = "Silakan masukkan kode pewarisan";
+"ACCOUNT_LOGIN_Account_LENGTH_NULL" = "Akun tidak boleh kosong, silakan masukkan akun";
+"ACCOUNT_LOGIN_PWD_LENGTH_NULL" = "Kata sandi tidak boleh kosong, silakan masukkan kata sandi";
+
+
+"ACCOUNT_LOGIN_TITLE" = "Login";
+"ACCOUNT_LOGIN_FOLOW_CODE_LOGIN" = "Masuk Dengan Code Pewarisan";
+
+"ACCOUNT_LOGIN_GUEST_LOGIN" = "Masuk sebagai Pengunjung";
+"ACCOUNT_LOGIN_EMAIL_LOGIN" = "Sign in with Email";
+"ACCOUNT_LOGIN_ACCPWD_LOGIN" = "Sign in with Account";
+"ACCOUNT_LOGIN_FACEBOOK_LOGIN" = "Sign in with Facebook";
+"ACCOUNT_LOGIN_GOOGLE_LOGIN" = "Sign in with Google";
+"ACCOUNT_LOGIN_GAMECENTER_LOGIN" = "Sign in with GameCenter";
+"ACCOUNT_LOGIN_TWITTER_LOGIN" = "Sign in with Twitter";
+"ACCOUNT_LOGIN_LINE_LOGIN" = "Sign in with Line";
+"ACCOUNT_LOGIN_FOLOWCODE_LOGIN" = "Sign in with Transfer Code";
+"ACCOUNT_LOGIN_APPLE_LOGIN" = "Sign in with Apple";
+"ACCOUNT_LOGIN_WECHAT_LOGIN" = "Sign in with Wechat";
+"ACCOUNT_LOGIN_QQ_LOGIN" = "Sign in with QQ";
+
+
+
+"ACCOUNT_LOGIN_DIVIDING_TEXT" = "Metode Login";
+"ACCOUNT_LOGIN_BINDACCOUNT" = "Ikatan Akun";
+"ACCOUNT_LOGIN_AUTHORIZATION_ERROR_TIP" = "Otorisasi dicabut";
+"ACCOUNT_AUTHORIZATION_LOGIN_RESULT_ERROR_TIP" = "Login otorisasi gagal, silakan coba lagi";
+"ACCOUNT_AUTHORIZATION_BIND_RESULT_ERROR_TIP" = "Ikatan otorisasi gagal, silakan coba lagi";
+"ACCOUNT_LOGIN_BIND_DETAIL" = "Untuk menghindari kehilangan kemajuan permainan, silakan segera ikat metode login akun lain";
+"ACCOUNT_LOGIN_BIND_GUEST_PRETEXT" = "Akun saat ini adalah akun pengunjung. ";
+"ACCOUNT_AUTHORIZATION_ONLY_RESULT_ERROR_TIP" = "Otorisasi Gagal";
+
+"ACCOUNT_LOGIN_BIND_UNBIND_TITLE" = "Ikat";
+"ACCOUNT_LOGIN_BIND_UNBIND_TITLE_CONTENT" = "Belum terikat";
+"ACCOUNT_LOGIN_BIND_BINDED_TITLE" = "Telah terikat";
+"ACCOUNT_MORE_LOGIN_TTTLE" = "Metode Masuk Lainnya";
+"ACCOUNT_LOGIIN_CC_TEXT"   = "Kode Pewarisan";
+"ACCOUNT_LOGIIN_WECHAT_TEXT" = "Wechat";
+"ACCOUNT_LOGIIN_QQ_TEXT" = "QQ";
+"ACCOUNT_LOGIIN_FACEBOOK_TEXT" = "Facebook";
+"ACCOUNT_LOGIIN_TWITTER_TEXT"  = "Twitter";
+"ACCOUNT_LOGIIN_LINE_TEXT"  = "LINE";
+"ACCOUNT_LOGIIN_GOOGLE_TEXT"  = "Google";
+"ACCOUNT_LOGIIN_GAMECENTER_TEXT" = "GameCenter";
+"ACCOUNT_LOGIIN_APPLE_TEXT" = "Apple";
+"ACCOUNT_LOGIIN_EMAIL_TEXT" = "Email";
+"ACCOUNT_LOGIIN_GUEST_TEXT" = "Pengunjung";
+"ACCOUNT_LOGIIN_ACCPWD_TEXT" = "Akun dan kata sandi";
+
+
+"ACCOUNT_LOGIN_DATA_ANOMALY" = "Data tidak normal";
+"ACCOUNT_LOGIN_DATA_TIME_OUT" = "Login timeout. Silakan coba lagi nanti";
+"ACCOUNT_LOGIN_DATA_CANNOT_RESPONSE" = "Pengunduhan gagal, silakan coba lagi";
+"ACCOUNT_NETWORK_DATA_ERROR" = "Jaringan bermasalah, silakan coba lagi";
+"ACCOUNT_WELCOME_GUEST_PLAYER"  = "Pengunjung, selamat datang di permainan";
+"ACCOUNT_WELCOME_ENTER_GAME"  = "Selamat datang di permainan";
+"ACCOUNT_EXIT_LOGIN_TEXT"  = "Apakah Anda yakin ingin keluar dari login?";
+"ACCOUNT_LOGIN_Exit" = "Keluar";
+"ACCOUNT_LOGIN_BIND_SURE" = "Konfirmasi Ikatan";
+"ACCOUNT_LOGIN_DATA_CANCEL_THIRD_LOGIN" = "Cancel login";
+"ACCOUNT_LOGIN_THIRD_USER" = "User";
+"ACCOUNT_BIND_LIST_INFO_GET_TEXT" = "Gagal mengambil informasi binding. Silakan coba lagi nanti";
+"ACCOUNT_EXCHANGE_ACCOUNT_ALERT_TEXT"  = "Apakah Anda yakin ingin beralih akun?";
+"ACCOUNT_AGREE_PRIVACY_COMPLETE_TEXT" = "Saya telah membaca dan menyetujui Perjanjian Layanan Game dan Kebijakan Privasi";
+"ACCOUNT_AGREE_PRIVACY_GAME_CONTRACT" = "Perjanjian Layanan Game";
+"ACCOUNT_AGREE_PRIVACY_PRIVACY_POLICY" = "Kebijakan Privasi";
+"ACCOUNT_AGREE_OVER_14_YEARS_TEXT" = "Saya berusia di atas 14 tahun";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_ADULT_TEXT" = "Klik 'Daftar dan Masuk' berarti Anda telah membaca Perjanjian Layanan Game dan Kebijakan Privasi serta berusia 14 tahun ke atas.";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_TEXT" = "Klik 'Daftar dan Masuk' berarti Anda telah membaca Perjanjian Layanan Game dan Kebijakan Privasi.";
+"ACCOUNT_AGREE_AGREEMENT_BACK_TEXT" = "Kembali";
+"ACCOUNT_LOGIN_TEXT_LINE_CONTENT" = "Masuk dengan akun dan kata sandi";
+"ACCOUNT_LOGIN_EMAIL_CODE_LOGIN" = "Log in with email verification code?";
+"ACCOUNT_LOGIN_FORGET_PASSWORD_TEXT" = "Lupa kata sandi?";
+"ACCOUNT_EXCHANGE_ACCOUNT_ALERT_TEXT"  = "Apakah Anda yakin ingin beralih akun?";
+"ACCOUNT_AGREE_PRIVACY_COMPLETE_TEXT" = "Saya telah membaca dan menyetujui Perjanjian Layanan Game dan Kebijakan Privasi";
+"ACCOUNT_AGREE_PRIVACY_GAME_CONTRACT" = "Perjanjian Layanan Game";
+"ACCOUNT_AGREE_PRIVACY_PRIVACY_POLICY" = "Kebijakan Privasi";
+"ACCOUNT_AGREE_OVER_14_YEARS_TEXT" = "Saya berusia di atas 14 tahun";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_ADULT_TEXT" = "Klik 'Daftar dan Masuk' berarti Anda telah membaca Perjanjian Layanan Game dan Kebijakan Privasi serta berusia 14 tahun ke atas.";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_TEXT" = "Klik 'Daftar dan Masuk' berarti Anda telah membaca Perjanjian Layanan Game dan Kebijakan Privasi.";
+"ACCOUNT_AGREE_AGREEMENT_BACK_TEXT" = "Kembali";
+"ACCOUNT_LOGIN_TEXT_LINE_CONTENT" = "Masuk dengan akun dan kata sandi";
+"ACCOUNT_LOGIN_EMAIL_CODE_LOGIN" = "Log in with email verification code?";
+"ACCOUNT_LOGIN_FORGET_PASSWORD_TEXT" = "Lupa kata sandi?";

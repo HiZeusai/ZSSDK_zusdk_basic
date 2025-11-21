@@ -35,13 +35,15 @@ let package = Package(
         .target(
             name: "ZUSDKBasicWrapper",
             dependencies: [
-                "ZUSDK_basic",
                 "ZSSDK",
                 "ZSCoreKit",
                 "GApple",
                 "GGameCenter",
             ],
-            path: "Sources"
+            path: "Sources",
+            resources: [
+                .copy("ZUSDK.bundle"),  // bundle 文件在 Sources 目录下
+            ]
         ),
 
     ]

@@ -1,0 +1,107 @@
+/*
+ Localizable.strings
+ TestLocalization
+ --日文--
+ Created by Vison
+ Copyright (c) 2021年 Vison. All rights reserved.
+ */
+
+"ACCOUNT_LOGIN_IMPUT_EMAIL" = "メールアドレス/ユーザー名";
+"ACCOUNT_LOGIN_IMPUT_PWD" = "パスワード";
+"ACCOUNT_LOGIN_REGISTER_NOW" = "新規登録";
+"ACCOUNT_LOGIN_OTHER_ACCOUNT" = "他のログイン方法";
+"ACCOUNT_LOGIN_DELE_LOGIN_INFO" = "このアカウントのログイン情報を削除しますか";
+"ACCOUNT_LOGIN_CANCEL" = "キャンセル";
+"ACCOUNT_LOGIN_SURE" = "確認";
+"ACCOUNT_LOGIN_REGISTER_EMAIL_PLACEHOLDER" = "メールアドレスを入力してください";
+"ACCOUNT_LOGIN_REGISTER_PWD_PLACEHOLDER" = "8～20桁のパスワード（英字・数字を両方含むもの）";
+"ACCOUNT_LOGIN_REGISTER_PWD_PLACEHOLDER_AGAIN" = "パスワード確認";
+"ACCOUNT_LOGIN_REGISTER_REGISTERANDLOGIN" = "登録してログイン";
+"ACCOUNT_LOGIN_REGISTER_IMPUT_ENABLE_EAMIL" = "有効なメールアドレスを入力してください";
+"ACCOUNT_LOGIN_REGISTER_PWD_TIP" = "パスワードは8-20文字の間で入力してください";
+"ACCOUNT_LOGIN_REGISTER_PWD_INCONFORMITY_TIP" = "2回入力したパスワードが一致しません";
+"ACCOUNT_LOGIN_SPECIAL_CHAR_TIP" = "パスワードに使用できない記号が含まれています";
+"ACCOUNT_LOGIN_Account_FOLLOW_CODE_PLACEHOLDER" = "引継ぎコードを入力してください";
+"ACCOUNT_LOGIN_Account_LENGTH_NULL" = "アカウントは空欄にはできません";
+"ACCOUNT_LOGIN_PWD_LENGTH_NULL" = "パスワードは空欄にはできません";
+
+
+"ACCOUNT_LOGIN_TITLE" = "ログイン";
+"ACCOUNT_LOGIN_FOLOW_CODE_LOGIN" = "引継ぎコードでログイン";
+
+"ACCOUNT_LOGIN_GUEST_LOGIN" = "ゲストログイン";
+"ACCOUNT_LOGIN_EMAIL_LOGIN" = "Sign in with Email";
+"ACCOUNT_LOGIN_ACCPWD_LOGIN" = "Sign in with Account";
+"ACCOUNT_LOGIN_FACEBOOK_LOGIN" = "Sign in with Facebook";
+"ACCOUNT_LOGIN_GOOGLE_LOGIN" = "Sign in with Google";
+"ACCOUNT_LOGIN_GAMECENTER_LOGIN" = "Sign in with GameCenter";
+"ACCOUNT_LOGIN_TWITTER_LOGIN" = "Sign in with Twitter";
+"ACCOUNT_LOGIN_LINE_LOGIN" = "Sign in with Line";
+"ACCOUNT_LOGIN_FOLOWCODE_LOGIN" = "Sign in with Transfer Code";
+"ACCOUNT_LOGIN_APPLE_LOGIN" = "Sign in with Apple";
+"ACCOUNT_LOGIN_WECHAT_LOGIN" = "Sign in with Wechat";
+"ACCOUNT_LOGIN_QQ_LOGIN" = "Sign in with QQ";
+
+
+
+"ACCOUNT_LOGIN_DIVIDING_TEXT" = "ログイン方法";
+"ACCOUNT_LOGIN_BINDACCOUNT" = "アカウントの連携";
+"ACCOUNT_LOGIN_AUTHORIZATION_ERROR_TIP" = "権限解除";
+"ACCOUNT_AUTHORIZATION_LOGIN_RESULT_ERROR_TIP" = "認証ログインに失敗しました。再試行してください";
+"ACCOUNT_AUTHORIZATION_BIND_RESULT_ERROR_TIP" = "連携に失敗しました。再試行してください";
+"ACCOUNT_LOGIN_BIND_DETAIL" = "ゲーム進行状況の損失を避けるため、できるだけ早めに他のアカウントと連携してください";
+"ACCOUNT_LOGIN_BIND_GUEST_PRETEXT" = "現在のアカウントはゲストアカウントです。";
+"ACCOUNT_AUTHORIZATION_ONLY_RESULT_ERROR_TIP" = "認証に失敗しました";
+
+"ACCOUNT_LOGIN_BIND_UNBIND_TITLE" = "連携";
+"ACCOUNT_LOGIN_BIND_UNBIND_TITLE_CONTENT" = "未連携";
+"ACCOUNT_LOGIN_BIND_BINDED_TITLE" = "連携済み";
+"ACCOUNT_MORE_LOGIN_TTTLE" = "他のログイン方法";
+"ACCOUNT_LOGIIN_CC_TEXT"   = "引継ぎコード";
+"ACCOUNT_LOGIIN_WECHAT_TEXT" = "Wechat";
+"ACCOUNT_LOGIIN_QQ_TEXT" = "QQ";
+"ACCOUNT_LOGIIN_FACEBOOK_TEXT" = "Facebook";
+"ACCOUNT_LOGIIN_TWITTER_TEXT"  = "Twitter";
+"ACCOUNT_LOGIIN_LINE_TEXT"  = "LINE";
+"ACCOUNT_LOGIIN_GOOGLE_TEXT"  = "Google";
+"ACCOUNT_LOGIIN_GAMECENTER_TEXT" = "GameCenter";
+"ACCOUNT_LOGIIN_APPLE_TEXT" = "Apple";
+"ACCOUNT_LOGIIN_EMAIL_TEXT" = "メールアドレス";
+"ACCOUNT_LOGIIN_GUEST_TEXT" = "ゲスト";
+"ACCOUNT_LOGIIN_ACCPWD_TEXT" = "アカウント・パスワード";
+
+
+"ACCOUNT_LOGIN_DATA_ANOMALY" = "データに異常があります";
+"ACCOUNT_LOGIN_DATA_TIME_OUT" = "ログインがタイムアウトしました。しばらくしてから再試行してください";
+"ACCOUNT_LOGIN_DATA_CANNOT_RESPONSE" = "読み込みに失敗しました。再試行してください";
+"ACCOUNT_NETWORK_DATA_ERROR" = "ネットワークエラーが発生しました。再試行してください";
+"ACCOUNT_WELCOME_GUEST_PLAYER"  = "ゲームへようこそ";
+"ACCOUNT_WELCOME_ENTER_GAME"  = "ようこそ";
+"ACCOUNT_EXIT_LOGIN_TEXT"  = "ログアウトしてもよろしいですか";
+"ACCOUNT_LOGIN_Exit" = "ログアウト";
+"ACCOUNT_LOGIN_BIND_SURE" = "連携する";
+"ACCOUNT_LOGIN_DATA_CANCEL_THIRD_LOGIN" = "Cancel login";
+"ACCOUNT_LOGIN_THIRD_USER" = "User";
+"ACCOUNT_BIND_LIST_INFO_GET_TEXT" = "連携情報を取得できませんでした。しばらくしてからもう一度お試しください";
+"ACCOUNT_EXCHANGE_ACCOUNT_ALERT_TEXT"  = "アカウントを切り替えてもよろしいですか？";
+"ACCOUNT_AGREE_PRIVACY_COMPLETE_TEXT" = "ゲーム利用規約とプライバシーポリシーに同意する";
+"ACCOUNT_AGREE_PRIVACY_GAME_CONTRACT" = "ゲーム利用規約";
+"ACCOUNT_AGREE_PRIVACY_PRIVACY_POLICY" = "プライバシーポリシー";
+"ACCOUNT_AGREE_OVER_14_YEARS_TEXT" = "私は14歳以上です";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_ADULT_TEXT" = "「登録してログイン」をクリックすると、ゲーム利用規約およびプライバシーポリシーを読み、14歳以上であることを確認したことになります。";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_TEXT" = "「登録してログイン」をクリックすると、ゲーム利用規約およびプライバシーポリシーを読み、同意したことになります。";
+"ACCOUNT_AGREE_AGREEMENT_BACK_TEXT" = "戻る";
+"ACCOUNT_LOGIN_TEXT_LINE_CONTENT" = "アカウント・パスワードでログイン";
+"ACCOUNT_LOGIN_EMAIL_CODE_LOGIN" = "認証コードでログイン？";
+"ACCOUNT_LOGIN_FORGET_PASSWORD_TEXT" = "パスワードを忘れた場合？";
+"ACCOUNT_EXCHANGE_ACCOUNT_ALERT_TEXT"  = "アカウントを切り替えてもよろしいですか？";
+"ACCOUNT_AGREE_PRIVACY_COMPLETE_TEXT" = "ゲーム利用規約とプライバシーポリシーに同意する";
+"ACCOUNT_AGREE_PRIVACY_GAME_CONTRACT" = "ゲーム利用規約";
+"ACCOUNT_AGREE_PRIVACY_PRIVACY_POLICY" = "プライバシーポリシー";
+"ACCOUNT_AGREE_OVER_14_YEARS_TEXT" = "私は14歳以上です";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_ADULT_TEXT" = "「登録してログイン」をクリックすると、ゲーム利用規約およびプライバシーポリシーを読み、14歳以上であることを確認したことになります。";
+"ACCOUNT_AGREE_AGREEMENT_COMPLETE_TEXT" = "「登録してログイン」をクリックすると、ゲーム利用規約およびプライバシーポリシーを読み、同意したことになります。";
+"ACCOUNT_AGREE_AGREEMENT_BACK_TEXT" = "戻る";
+"ACCOUNT_LOGIN_TEXT_LINE_CONTENT" = "アカウント・パスワードでログイン";
+"ACCOUNT_LOGIN_EMAIL_CODE_LOGIN" = "認証コードでログイン？";
+"ACCOUNT_LOGIN_FORGET_PASSWORD_TEXT" = "パスワードを忘れた場合？";
