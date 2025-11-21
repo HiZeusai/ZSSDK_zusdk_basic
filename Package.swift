@@ -8,10 +8,15 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "ZUSDK_basic",
+            name: "ZUSDK",
             targets: ["ZUSDKBasicWrapper"]),
     ],
     targets: [
+        .binaryTarget(
+            name: "ZUSDK",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.6/ZUSDK.xcframework.zip",
+            checksum: "ad193d671bb4aea711ab29649ac275ad633e4f10a678099eba4a576d452c3fef"
+        ),
         .binaryTarget(
             name: "ZSSDK",
             url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.6/ZSSDK.xcframework.zip",
@@ -36,6 +41,7 @@ let package = Package(
             name: "ZUSDKBasicWrapper",
             dependencies: [
                 "ZSSDK",
+                "ZUSDK",
                 "ZSCoreKit",
                 "GApple",
                 "GGameCenter",
