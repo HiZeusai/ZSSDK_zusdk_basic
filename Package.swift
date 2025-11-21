@@ -18,6 +18,11 @@ let package = Package(
             checksum: "ad193d671bb4aea711ab29649ac275ad633e4f10a678099eba4a576d452c3fef"
         ),
         .binaryTarget(
+            name: "channel_zeus",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.6/channel_zeus.xcframework.zip",
+            checksum: "b6bd37f7d9f934358d4f9f19e7c12ca95a432d8ddbf5479931dd30e53c598722"
+        ),
+        .binaryTarget(
             name: "ZSSDK",
             url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.6/ZSSDK.xcframework.zip",
             checksum: "ea15641ea51036e64c74b8a18d2d9c06e5451698c741901bd4c21b0433634b12"
@@ -45,6 +50,7 @@ let package = Package(
                 "ZSCoreKit",
                 "GApple",
                 "GGameCenter",
+                "channel_zeus"
             ],
             path: "Sources",
             resources: [
