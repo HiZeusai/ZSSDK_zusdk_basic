@@ -14,12 +14,12 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "ZSSDK",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.3/ZSSDK.xcframework.zip",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.6/ZSSDK.xcframework.zip",
             checksum: "de412947d75939892244342ad7d8edfdc8892a9d349d1dd4544e0e13a0c97524"
         ),
         .binaryTarget(
             name: "ZSCoreKit",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.3/ZSCoreKit.xcframework.zip",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.6/ZSCoreKit.xcframework.zip",
             checksum: "be9c7708546f0eaae6f51925da449d29b6d287dce662cf8ab0730436b8d40f7f"
         ),
         .binaryTarget(
