@@ -33,6 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
                                  ofType:(nullable NSString *)resourceType
                           inDirectory:(nullable NSString *)subdirectory;
 
+/// 测试方法：验证 ZUSDKBasicWrapper 是否正常工作
+/// 调用此方法会输出详细的调试信息
++ (void)testZUSDKBundleAccess;
+
 @end
 
 NS_ASSUME_NONNULL_END

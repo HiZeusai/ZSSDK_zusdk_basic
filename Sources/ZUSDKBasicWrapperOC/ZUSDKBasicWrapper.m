@@ -16,10 +16,20 @@
 /// 在类加载时自动执行，设置方法交换
 /// 这样用户的代码就可以通过 Bundle.main 访问资源，无需修改调用方式
 + (void)load {
+    NSLog(@"[ZUSDK] 🚀 ZUSDKBasicWrapper 类加载中...");
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        NSLog(@"[ZUSDK] 🔧 开始设置方法交换...");
         [self swizzleBundleMainPathForResource];
+        NSLog(@"[ZUSDK] ✅ 方法交换设置完成");
     });
+}
+
+/// 在类初始化时也执行一次（确保被调用）
++ (void)initialize {
+    if (self == [ZUSDKBasicWrapper class]) {
+        NSLog(@"[ZUSDK] 🔄 ZUSDKBasicWrapper initialize 被调用");
+    }
 }
 
 /// 保存原始方法的实现
@@ -28,17 +38,21 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
 /// 方法交换：拦截 Bundle.main 的 pathForResource:ofType: 方法
 /// 当查找 "ZUSDK.bundle/Localizable" 或 "ZUSDK.bundle/Images" 时，从模块 bundle 中查找
 + (void)swizzleBundleMainPathForResource {
+    NSLog(@"[ZUSDK] 🔧 开始执行方法交换...");
     Class bundleClass = [NSBundle class];
     
     // 获取原始方法
     Method originalMethod = class_getInstanceMethod(bundleClass, @selector(pathForResource:ofType:));
+    NSLog(@"[ZUSDK] 📋 原始方法: %@", originalMethod ? @"找到" : @"未找到");
     
     // 获取新方法（如果不存在则添加）
     Method swizzledMethod = class_getInstanceMethod(bundleClass, @selector(zusdk_pathForResource:ofType:));
+    NSLog(@"[ZUSDK] 📋 交换方法: %@", swizzledMethod ? @"找到" : @"未找到");
     
     if (originalMethod && swizzledMethod) {
         // 保存原始实现
         original_pathForResource_ofType_ = (NSString * (*)(id, SEL, NSString *, NSString *))method_getImplementation(originalMethod);
+        NSLog(@"[ZUSDK] 💾 已保存原始方法实现");
         
         // 检查是否已经交换过（避免重复交换）
         IMP originalIMP = method_getImplementation(originalMethod);
@@ -47,7 +61,12 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
         if (originalIMP != swizzledIMP) {
             // 交换实现
             method_exchangeImplementations(originalMethod, swizzledMethod);
+            NSLog(@"[ZUSDK] ✅ 方法交换成功完成");
+        } else {
+            NSLog(@"[ZUSDK] ⚠️ 方法已经交换过，跳过");
         }
+    } else {
+        NSLog(@"[ZUSDK] ❌ 方法交换失败：找不到方法");
     }
 }
 
@@ -59,6 +78,7 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
         // 检查是否查找 ZUSDK.bundle 相关资源
         if (name && [name containsString:@"ZUSDK.bundle"]) {
             NSLog(@"[ZUSDK] 🎯 方法交换拦截到 ZUSDK.bundle 资源查找: name=%@, ext=%@", name, ext ?: @"(nil)");
+            NSLog(@"[ZUSDK] 🎯 调用栈: %@", [NSThread callStackSymbols]);
             // 解析路径：例如 "ZUSDK.bundle/Localizable" -> "Localizable"
             NSString *resourcePath = name;
             if ([resourcePath hasPrefix:@"ZUSDK.bundle/"]) {
@@ -301,6 +321,43 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
                           inDirectory:(nullable NSString *)subdirectory {
     NSBundle *zusdkBundle = [self zusdkBundle];
     return [zusdkBundle pathForResource:resourceName ofType:resourceType inDirectory:subdirectory];
+}
+
+/// 测试方法：验证 ZUSDKBasicWrapper 是否正常工作
++ (void)testZUSDKBundleAccess {
+    NSLog(@"[ZUSDK] 🧪 ========== 开始测试 ZUSDK Bundle 访问 ==========");
+    
+    // 测试 1: 检查类是否加载
+    NSLog(@"[ZUSDK] 🧪 测试 1: 类加载检查");
+    NSLog(@"[ZUSDK] 🧪 ZUSDKBasicWrapper 类: %@", [ZUSDKBasicWrapper class]);
+    
+    // 测试 2: 测试 zusdkBundle 方法
+    NSLog(@"[ZUSDK] 🧪 测试 2: 调用 zusdkBundle 方法");
+    NSBundle *bundle = [self zusdkBundle];
+    NSLog(@"[ZUSDK] 🧪 zusdkBundle 返回: %@", bundle ? bundle.bundlePath : @"(nil)");
+    
+    // 测试 3: 测试方法交换是否生效
+    NSLog(@"[ZUSDK] 🧪 测试 3: 测试方法交换");
+    NSString *testPath = [[NSBundle mainBundle] pathForResource:@"ZUSDK.bundle/Localizable" ofType:nil];
+    NSLog(@"[ZUSDK] 🧪 Bundle.main.pathForResource 返回: %@", testPath ?: @"(nil)");
+    
+    // 测试 4: 测试 localizablePathForLanguageFile
+    NSLog(@"[ZUSDK] 🧪 测试 4: 测试 localizablePathForLanguageFile");
+    NSString *langPath = [self localizablePathForLanguageFile:@"en.lproj/Localizable.strings"];
+    NSLog(@"[ZUSDK] 🧪 localizablePathForLanguageFile 返回: %@", langPath ?: @"(nil)");
+    
+    // 测试 5: 列出所有 bundle
+    NSLog(@"[ZUSDK] 🧪 测试 5: 列出所有可用的 bundle");
+    NSArray *allBundles = [NSBundle allBundles];
+    for (NSBundle *b in allBundles) {
+        NSLog(@"[ZUSDK] 🧪 Bundle: %@", b.bundlePath);
+        NSString *zusdkPath = [b pathForResource:@"ZUSDK" ofType:@"bundle"];
+        if (zusdkPath) {
+            NSLog(@"[ZUSDK] 🧪   └─ 找到 ZUSDK.bundle: %@", zusdkPath);
+        }
+    }
+    
+    NSLog(@"[ZUSDK] 🧪 ========== 测试完成 ==========");
 }
 
 @end
