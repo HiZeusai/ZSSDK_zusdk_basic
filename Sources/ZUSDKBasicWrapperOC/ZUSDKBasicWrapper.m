@@ -55,7 +55,7 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
 /// 当在 Bundle.main 中查找 ZUSDK.bundle 相关资源时，从模块 bundle 中查找
 - (NSString *)zusdk_pathForResource:(NSString *)name ofType:(NSString *)ext {
     // 只处理 Bundle.main 的情况
-    if (self == [NSBundle mainBundle]) {
+    if ([self isEqual:[NSBundle mainBundle]]) {
         // 检查是否查找 ZUSDK.bundle 相关资源
         if (name && [name containsString:@"ZUSDK.bundle"]) {
             // 解析路径：例如 "ZUSDK.bundle/Localizable" -> "Localizable"
@@ -68,26 +68,32 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
             NSBundle *moduleBundle = [NSBundle bundleForClass:[ZUSDKBasicWrapper class]];
             NSString *zusdkBundlePath = [moduleBundle pathForResource:@"ZUSDK" ofType:@"bundle"];
             
-            if (zusdkBundlePath) {
-                NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath];
-                if (zusdkBundle) {
-                    // 在 ZUSDK.bundle 中查找资源
-                    // 如果 resourcePath 是 "Localizable"，查找目录
-                    // 如果 resourcePath 是 "Images"，查找目录
-                    NSString *path = [zusdkBundle pathForResource:resourcePath ofType:nil];
-                    if (path) {
-                        return path;
-                    }
-                    
-                    // 如果 resourcePath 包含路径分隔符，尝试作为目录查找
-                    if ([resourcePath containsString:@"/"]) {
-                        NSArray *components = [resourcePath pathComponents];
-                        if (components.count > 0) {
-                            NSString *directory = components[0];
-                            path = [zusdkBundle pathForResource:directory ofType:nil];
-                            if (path) {
-                                // 返回目录路径，用户可以继续拼接
-                                return path;
+            // 确保路径不为空且有效
+            if (zusdkBundlePath && zusdkBundlePath.length > 0) {
+                // 验证路径是否存在
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                BOOL isDirectory = NO;
+                if ([fileManager fileExistsAtPath:zusdkBundlePath isDirectory:&isDirectory] && isDirectory) {
+                    NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath];
+                    if (zusdkBundle) {
+                        // 在 ZUSDK.bundle 中查找资源
+                        // 如果 resourcePath 是 "Localizable"，查找目录
+                        // 如果 resourcePath 是 "Images"，查找目录
+                        NSString *path = [zusdkBundle pathForResource:resourcePath ofType:nil];
+                        if (path && path.length > 0) {
+                            return path;
+                        }
+                        
+                        // 如果 resourcePath 包含路径分隔符，尝试作为目录查找
+                        if ([resourcePath containsString:@"/"]) {
+                            NSArray *components = [resourcePath pathComponents];
+                            if (components.count > 0) {
+                                NSString *directory = components[0];
+                                path = [zusdkBundle pathForResource:directory ofType:nil];
+                                if (path && path.length > 0) {
+                                    // 返回目录路径，用户可以继续拼接
+                                    return path;
+                                }
                             }
                         }
                     }
@@ -122,31 +128,43 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
     
     // 优先从主 bundle 中查找（用户代码使用 Bundle.main）
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"ZUSDK" ofType:@"bundle"];
-    if (bundlePath) {
-        NSBundle *zusdkBundle = [NSBundle bundleWithPath:bundlePath];
-        if (zusdkBundle) {
-            return zusdkBundle;
+    if (bundlePath && bundlePath.length > 0) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        BOOL isDirectory = NO;
+        if ([fileManager fileExistsAtPath:bundlePath isDirectory:&isDirectory] && isDirectory) {
+            NSBundle *zusdkBundle = [NSBundle bundleWithPath:bundlePath];
+            if (zusdkBundle) {
+                return zusdkBundle;
+            }
         }
     }
     
     // 从模块 bundle 中查找（SPM 标准方式）
     NSBundle *moduleBundle = [NSBundle bundleForClass:[ZUSDKBasicWrapper class]];
     bundlePath = [moduleBundle pathForResource:@"ZUSDK" ofType:@"bundle"];
-    if (bundlePath) {
-        NSBundle *zusdkBundle = [NSBundle bundleWithPath:bundlePath];
-        if (zusdkBundle) {
-            return zusdkBundle;
+    if (bundlePath && bundlePath.length > 0) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        BOOL isDirectory = NO;
+        if ([fileManager fileExistsAtPath:bundlePath isDirectory:&isDirectory] && isDirectory) {
+            NSBundle *zusdkBundle = [NSBundle bundleWithPath:bundlePath];
+            if (zusdkBundle) {
+                return zusdkBundle;
+            }
         }
     }
     
     // 从所有框架 bundle 中查找
     NSArray *allBundles = [NSBundle allBundles];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     for (NSBundle *bundle in allBundles) {
         NSString *path = [bundle pathForResource:@"ZUSDK" ofType:@"bundle"];
-        if (path) {
-            NSBundle *zusdkBundle = [NSBundle bundleWithPath:path];
-            if (zusdkBundle) {
-                return zusdkBundle;
+        if (path && path.length > 0) {
+            BOOL isDirectory = NO;
+            if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory] && isDirectory) {
+                NSBundle *zusdkBundle = [NSBundle bundleWithPath:path];
+                if (zusdkBundle) {
+                    return zusdkBundle;
+                }
             }
         }
     }
