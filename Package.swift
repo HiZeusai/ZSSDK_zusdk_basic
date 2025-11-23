@@ -46,8 +46,14 @@ let package = Package(
             checksum: "c3be7d42b3a577addf0ce453823d78587640144ae9c004259fbfc274f890488f"
         ),
         .target(
+            name: "ZUSDKBasicWrapperOC",
+            path: "Sources/ZUSDKBasicWrapperOC",
+            publicHeadersPath: "."
+        ),
+        .target(
             name: "ZUSDKBasicWrapper",
             dependencies: [
+                "ZUSDKBasicWrapperOC",  // 依赖 Objective-C target
                 "ZSSDK",
                 "ZUSDK",
                 "ZSCoreKit",
@@ -56,6 +62,8 @@ let package = Package(
                 "channel_zeus"
             ],
             path: "Sources",
+            exclude: ["ZUSDK.bundle", "ZUSDKBasicWrapperOC"],  // 排除 bundle 和 OC 目录
+            sources: ["ZUSDKBasicWrapper.swift"],  // 只包含 Swift 文件
             resources: [
                 .copy("ZUSDK.bundle"),  // bundle 文件在 Sources 目录下
             ]

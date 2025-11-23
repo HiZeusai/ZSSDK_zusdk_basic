@@ -8,12 +8,8 @@
 #import "ZUSDKBasicWrapper.h"
 #import <objc/runtime.h>
 
-// 导入 Swift 模块（如果使用 Swift 代码）
-#if __has_include(<ZUSDKBasicWrapper/ZUSDKBasicWrapper-Swift.h>)
-#import <ZUSDKBasicWrapper/ZUSDKBasicWrapper-Swift.h>
-#elif __has_include("ZUSDKBasicWrapper-Swift.h")
-#import "ZUSDKBasicWrapper-Swift.h"
-#endif
+// 注意：这是一个纯 Objective-C target，不导入 Swift 代码
+// Swift 代码在 ZUSDKBasicWrapper target 中
 
 @implementation ZUSDKBasicWrapper
 
