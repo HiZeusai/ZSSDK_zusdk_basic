@@ -18,14 +18,14 @@ let package = Package(
             checksum: "800376a860a538e0837a081d347670d328cfb3800a33ad9fe66330118407a8af"
         ),
         .binaryTarget(
-                    name: "ZSSDK",
-                    url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.7/ZSSDK.xcframework.zip",
-                    checksum: "ea15641ea51036e64c74b8a18d2d9c06e5451698c741901bd4c21b0433634b12"
+            name: "ZSSDK",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.7/ZSSDK.xcframework.zip",
+            checksum: "ea15641ea51036e64c74b8a18d2d9c06e5451698c741901bd4c21b0433634b12"
         ),
         .binaryTarget(
-                    name: "ZSCoreKit",
-                    url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.7/ZSCoreKit.xcframework.zip",
-                    checksum: "729f445d4c14d917f72a4b594e4d3717b74d00ff63ef5afc8398f4089c134bdd"
+            name: "ZSCoreKit",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.7/ZSCoreKit.xcframework.zip",
+            checksum: "e8a951b0a8eb203af442c7b28a6f59f5546d34eb38cdd117eeff92abd5e34732"
         ),
         .binaryTarget(
             name: "channel_zeus",
