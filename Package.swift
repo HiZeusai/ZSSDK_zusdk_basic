@@ -18,7 +18,7 @@ let package = Package(
         .binaryTarget(
             name: "ZUSDK",
             url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZUSDK_2.1.8_fixbundle.zip",
-            checksum: "800376a860a538e0837a081d347670d328cfb3800a33ad9fe66330118407a8af"
+            checksum: "f076e599d7cfce9359a6815a28fa587e53c12913bf409a728dedf447ad754ede"
         ),
         .binaryTarget(
             name: "ZSSDK",
@@ -33,7 +33,7 @@ let package = Package(
         .binaryTarget(
             name: "channel_zeus",
             url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/channel_zeus_2.1.8_fixbundle.zip",
-            checksum: "b6bd37f7d9f934358d4f9f19e7c12ca95a432d8ddbf5479931dd30e53c598722"
+            checksum: "a6443fbf3d5b26efb6ebcc0f54049b77d7618676adbc7964a46af2443b7f8367"
         ),
         .binaryTarget(
             name: "GApple",
