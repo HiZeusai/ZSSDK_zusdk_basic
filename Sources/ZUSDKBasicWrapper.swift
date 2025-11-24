@@ -1,9 +1,64 @@
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// 辅助类用于获取模块 bundle
 private class BundleHelper: NSObject {}
 
 public enum ZUSDKBasicWrapper {
+    /// 从 ZUSDK.bundle 中加载图片
+    /// - Parameters:
+    ///   - name: 图片名称（不含扩展名，例如 "pb_apple"）
+    ///   - directory: 图片所在目录，默认为 "Images"
+    /// - Returns: UIImage 实例，如果找不到则返回 nil
+    public static func image(named name: String, inDirectory directory: String = "Images") -> UIImage? {
+        let bundle = ZUSDKBasicWrapper.bundle
+        
+        // 方法1: 使用 UIImage(named:in:compatibleWith:) - 推荐方式
+        // 注意：图片名称需要包含 @2x/@3x 后缀，或者让系统自动选择
+        // 先尝试直接名称
+        if let image = UIImage(named: name, in: bundle, compatibleWith: nil) {
+            return image
+        }
+        
+        // 方法2: 如果直接名称找不到，尝试添加 @2x 后缀
+        let nameWith2x = "\(name)@2x"
+        if let image = UIImage(named: nameWith2x, in: bundle, compatibleWith: nil) {
+            return image
+        }
+        
+        // 方法3: 尝试添加 @3x 后缀
+        let nameWith3x = "\(name)@3x"
+        if let image = UIImage(named: nameWith3x, in: bundle, compatibleWith: nil) {
+            return image
+        }
+        
+        // 方法4: 使用 pathForResource 手动加载
+        if let imagePath = bundle.path(forResource: name, ofType: "png", inDirectory: directory) {
+            if let image = UIImage(contentsOfFile: imagePath) {
+                return image
+            }
+        }
+        
+        // 方法5: 尝试带 @2x 的路径
+        if let imagePath = bundle.path(forResource: "\(name)@2x", ofType: "png", inDirectory: directory) {
+            if let image = UIImage(contentsOfFile: imagePath) {
+                return image
+            }
+        }
+        
+        // 方法6: 尝试带 @3x 的路径
+        if let imagePath = bundle.path(forResource: "\(name)@3x", ofType: "png", inDirectory: directory) {
+            if let image = UIImage(contentsOfFile: imagePath) {
+                return image
+            }
+        }
+        
+        print("[ZUSDK] ⚠️ 未找到图片: \(name) 在目录: \(directory)")
+        return nil
+    }
+    
     /// 测试方法：验证 ZUSDKBasicWrapper 是否正常工作
     /// 调用此方法会输出详细的调试信息
     public static func testZUSDKBundleAccess() {
@@ -33,9 +88,16 @@ public enum ZUSDKBasicWrapper {
         // 测试 3: 测试图片资源
         print("[ZUSDK] 🧪 测试 3: 测试图片资源")
         if let imagePath = bundle.path(forResource: "pb_apple@2x", ofType: "png", inDirectory: "Images") {
-            print("[ZUSDK] 🧪 ✅ 找到图片: \(imagePath)")
+            print("[ZUSDK] 🧪 ✅ 找到图片路径: \(imagePath)")
+            
+            // 测试使用辅助方法加载图片
+            if let image = ZUSDKBasicWrapper.image(named: "pb_apple") {
+                print("[ZUSDK] 🧪 ✅ 成功加载图片，尺寸: \(image.size)")
+            } else {
+                print("[ZUSDK] 🧪 ❌ 无法加载图片")
+            }
         } else {
-            print("[ZUSDK] 🧪 ❌ 未找到图片")
+            print("[ZUSDK] 🧪 ❌ 未找到图片路径")
         }
         
         // 测试 4: 列出所有 bundle

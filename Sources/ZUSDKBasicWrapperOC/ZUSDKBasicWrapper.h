@@ -7,6 +7,10 @@
 
 #import <Foundation/Foundation.h>
 
+#if __has_include(<UIKit/UIKit.h>)
+@class UIImage;
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// ZUSDKBasicWrapper 提供访问 ZUSDK.bundle 资源的辅助方法
@@ -32,6 +36,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable NSString *)pathForResource:(NSString *)resourceName
                                  ofType:(nullable NSString *)resourceType
                           inDirectory:(nullable NSString *)subdirectory;
+
+#if __has_include(<UIKit/UIKit.h>)
+/// 从 ZUSDK.bundle 中加载图片
+/// @param name 图片名称（不含扩展名和 @2x/@3x 后缀，例如 "pb_apple"）
+/// @param directory 图片所在目录，默认为 "Images"
+/// @return UIImage 实例，如果找不到则返回 nil
++ (nullable UIImage *)imageNamed:(NSString *)name inDirectory:(nullable NSString *)directory;
+#endif
 
 /// 测试方法：验证 ZUSDKBasicWrapper 是否正常工作
 /// 调用此方法会输出详细的调试信息

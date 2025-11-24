@@ -7,6 +7,9 @@
 
 #import "ZUSDKBasicWrapper.h"
 #import <objc/runtime.h>
+#if __has_include(<UIKit/UIKit.h>)
+#import <UIKit/UIKit.h>
+#endif
 
 // 注意：这是一个纯 Objective-C target，不导入 Swift 代码
 // Swift 代码在 ZUSDKBasicWrapper target 中
@@ -321,6 +324,66 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
                           inDirectory:(nullable NSString *)subdirectory {
     NSBundle *zusdkBundle = [self zusdkBundle];
     return [zusdkBundle pathForResource:resourceName ofType:resourceType inDirectory:subdirectory];
+}
+
++ (nullable UIImage *)imageNamed:(NSString *)name inDirectory:(nullable NSString *)directory {
+    if (!name || name.length == 0) {
+        return nil;
+    }
+    
+    NSString *imageDirectory = directory ?: @"Images";
+    NSBundle *zusdkBundle = [self zusdkBundle];
+    
+    // 方法1: 使用 UIImage(named:in:compatibleWith:) - 推荐方式
+    // 先尝试直接名称（系统会自动选择 @2x/@3x）
+    UIImage *image = [UIImage imageNamed:name inBundle:zusdkBundle compatibleWithTraitCollection:nil];
+    if (image) {
+        return image;
+    }
+    
+    // 方法2: 尝试添加 @2x 后缀
+    NSString *nameWith2x = [NSString stringWithFormat:@"%@@2x", name];
+    image = [UIImage imageNamed:nameWith2x inBundle:zusdkBundle compatibleWithTraitCollection:nil];
+    if (image) {
+        return image;
+    }
+    
+    // 方法3: 尝试添加 @3x 后缀
+    NSString *nameWith3x = [NSString stringWithFormat:@"%@@3x", name];
+    image = [UIImage imageNamed:nameWith3x inBundle:zusdkBundle compatibleWithTraitCollection:nil];
+    if (image) {
+        return image;
+    }
+    
+    // 方法4: 使用 pathForResource 手动加载
+    NSString *imagePath = [zusdkBundle pathForResource:name ofType:@"png" inDirectory:imageDirectory];
+    if (imagePath) {
+        image = [UIImage imageWithContentsOfFile:imagePath];
+        if (image) {
+            return image;
+        }
+    }
+    
+    // 方法5: 尝试带 @2x 的路径
+    imagePath = [zusdkBundle pathForResource:nameWith2x ofType:@"png" inDirectory:imageDirectory];
+    if (imagePath) {
+        image = [UIImage imageWithContentsOfFile:imagePath];
+        if (image) {
+            return image;
+        }
+    }
+    
+    // 方法6: 尝试带 @3x 的路径
+    imagePath = [zusdkBundle pathForResource:nameWith3x ofType:@"png" inDirectory:imageDirectory];
+    if (imagePath) {
+        image = [UIImage imageWithContentsOfFile:imagePath];
+        if (image) {
+            return image;
+        }
+    }
+    
+    NSLog(@"[ZUSDK] ⚠️ 未找到图片: %@ 在目录: %@", name, imageDirectory);
+    return nil;
 }
 
 /// 测试方法：验证 ZUSDKBasicWrapper 是否正常工作
