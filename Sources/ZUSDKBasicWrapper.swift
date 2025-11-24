@@ -293,14 +293,25 @@ public enum ZUSDKBasicWrapper {
         let allBundles = Bundle.allBundles
         print("[ZUSDK] 📦 Swift: 找到 \(allBundles.count) 个 bundle")
         for b in allBundles {
-            print("[ZUSDK] 📦 Swift: 检查 bundle: \(b.bundlePath)")
+            let bundlePath = b.bundlePath
+            print("[ZUSDK] 🔍 Swift: 检查 bundle: \(bundlePath)")
             
             // 跳过主应用 bundle（已经检查过了）
-            if b.bundlePath == Bundle.main.bundlePath {
+            if bundlePath == Bundle.main.bundlePath {
                 continue
             }
             
-            // 在 framework bundle 中查找
+            // 方法3a: 检查 bundle 路径本身是否就是 ZUSDK.bundle
+            if bundlePath.hasSuffix("ZUSDK.bundle") {
+                print("[ZUSDK] ✅ Swift: bundle 本身就是 ZUSDK.bundle: \(bundlePath)")
+                var isDirectory: ObjCBool = false
+                if FileManager.default.fileExists(atPath: bundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                    print("[ZUSDK] ✅ Swift: 直接使用找到的 ZUSDK.bundle: \(bundlePath)")
+                    return b
+                }
+            }
+            
+            // 方法3b: 在 framework bundle 中查找
             if let path = b.path(forResource: "ZUSDK", ofType: "bundle") {
                 print("[ZUSDK] ✅ Swift: 在 bundle 中找到 ZUSDK.bundle: \(path)")
                 if let bundle = Bundle(path: path) {
@@ -308,13 +319,24 @@ public enum ZUSDKBasicWrapper {
                 }
             }
             
-            // 尝试在 framework 的 resourcePath 中查找
+            // 方法3c: 检查 bundle 路径的父目录中是否有 ZUSDK.bundle
+            let parentDir = (bundlePath as NSString).deletingLastPathComponent
+            let zusdkBundlePath = (parentDir as NSString).appendingPathComponent("ZUSDK.bundle")
+            var isDirectory: ObjCBool = false
+            if FileManager.default.fileExists(atPath: zusdkBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                print("[ZUSDK] ✅ Swift: 在父目录找到 ZUSDK.bundle: \(zusdkBundlePath)")
+                if let bundle = Bundle(path: zusdkBundlePath) {
+                    return bundle
+                }
+            }
+            
+            // 方法3d: 尝试在 framework 的 resourcePath 中查找
             if let resourcePath = b.resourcePath {
-                let zusdkBundlePath = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
-                var isDirectory: ObjCBool = false
-                if FileManager.default.fileExists(atPath: zusdkBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
-                    print("[ZUSDK] ✅ Swift: 在 bundle resourcePath 中找到 ZUSDK.bundle: \(zusdkBundlePath)")
-                    if let bundle = Bundle(path: zusdkBundlePath) {
+                let zusdkBundlePath2 = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
+                var isDirectory2: ObjCBool = false
+                if FileManager.default.fileExists(atPath: zusdkBundlePath2, isDirectory: &isDirectory2) && isDirectory2.boolValue {
+                    print("[ZUSDK] ✅ Swift: 在 bundle resourcePath 中找到 ZUSDK.bundle: \(zusdkBundlePath2)")
+                    if let bundle = Bundle(path: zusdkBundlePath2) {
                         return bundle
                     }
                 }

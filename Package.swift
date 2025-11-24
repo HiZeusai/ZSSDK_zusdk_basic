@@ -17,8 +17,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "ZUSDK",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZUSDK_2.1.8_20251124.zip",
-            checksum: "e3cafdb64fb6fc433b1d9e6e0ea1599a485f12ed1df48464179eb639e352dcdf"
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZUSDK_2.1.8.zip",
+            checksum: "9d99e59750b15aa9ef4d87ba6fa4f80101e5d84f360d090ecfefc0c827cc70c6"
         ),
         .binaryTarget(
             name: "ZSSDK",
