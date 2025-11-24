@@ -62,7 +62,7 @@ let package = Package(
                 "channel_zeus"
             ],
             path: "Sources",
-            exclude: ["ZUSDK.bundle", "ZUSDKBasicWrapperOC"],  // 排除 bundle 和 OC 目录
+            exclude: ["ZUSDKBasicWrapperOC"],  // 只排除 OC 目录，bundle 需要包含在 resources 中
             sources: ["ZUSDKBasicWrapper.swift"],  // 只包含 Swift 文件
             resources: [
                 .copy("ZUSDK.bundle"),  // bundle 文件在 Sources 目录下

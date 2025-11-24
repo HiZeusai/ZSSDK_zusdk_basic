@@ -112,6 +112,9 @@ public enum ZUSDKBasicWrapper {
         // 确保 bundle 已复制到主应用
         ensureInitialized()
         
+        // 注意：Bundle.module 是 SPM 自动生成的，但可能在某些构建配置下不可用
+        // 我们优先使用其他更可靠的方法
+        
         // 方式1: 从主bundle中查找（优先，因为用户代码使用 Bundle.main）
         print("[ZUSDK] 🔍 Swift: 方法1 - 从主 bundle 查找")
         if let bundlePath = Bundle.main.path(forResource: "ZUSDK", ofType: "bundle") {
@@ -131,6 +134,58 @@ public enum ZUSDKBasicWrapper {
         let frameworkBundle = moduleBundle
         print("[ZUSDK] 📦 Swift: 模块 bundle 路径: \(frameworkBundle.bundlePath)")
         print("[ZUSDK] 📦 Swift: 模块 bundle resourcePath: \(frameworkBundle.resourcePath ?? "(nil)")")
+        
+        // 检查是否是主应用 bundle（说明 SPM 模块可能被编译成 framework）
+        let mainBundlePath = Bundle.main.bundlePath
+        if frameworkBundle.bundlePath == mainBundlePath {
+            print("[ZUSDK] ⚠️ Swift: 模块 bundle 与主应用 bundle 相同，尝试在 Frameworks 中查找")
+            
+            // 在 Frameworks 目录中查找 SPM 模块
+            let frameworksPath = (mainBundlePath as NSString).appendingPathComponent("Frameworks")
+            let fileManager = FileManager.default
+            var isDirectory: ObjCBool = false
+            
+            if fileManager.fileExists(atPath: frameworksPath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                print("[ZUSDK] 📂 Swift: 检查 Frameworks 目录: \(frameworksPath)")
+                if let frameworks = try? fileManager.contentsOfDirectory(atPath: frameworksPath) {
+                    for frameworkName in frameworks {
+                        // 查找可能的 SPM 模块 framework（通常以包名或 target 名命名）
+                        if frameworkName.hasSuffix(".framework") || frameworkName.contains("ZUSDK") || frameworkName.contains("ZSSDK") {
+                            let frameworkPath = (frameworksPath as NSString).appendingPathComponent(frameworkName)
+                            print("[ZUSDK] 🔍 Swift: 检查 framework: \(frameworkPath)")
+                            
+                            // 尝试作为 framework bundle 加载
+                            if let frameworkBundle = Bundle(path: frameworkPath) {
+                                print("[ZUSDK] 📦 Swift: 找到 framework bundle: \(frameworkBundle.bundlePath)")
+                                
+                                // 在 framework 中查找 ZUSDK.bundle
+                                if let bundlePath = frameworkBundle.path(forResource: "ZUSDK", ofType: "bundle") {
+                                    print("[ZUSDK] ✅ Swift: 在 framework 中找到 ZUSDK.bundle: \(bundlePath)")
+                                    if let bundle = Bundle(path: bundlePath) {
+                                        print("[ZUSDK] ✅ Swift: 成功创建 bundle: \(bundle.bundlePath)")
+                                        return bundle
+                                    }
+                                }
+                                
+                                // 尝试在 framework 的 resourcePath 中查找
+                                if let resourcePath = frameworkBundle.resourcePath {
+                                    let zusdkBundlePath = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
+                                    print("[ZUSDK] 🔍 Swift: 尝试 framework resourcePath: \(zusdkBundlePath)")
+                                    var isDir: ObjCBool = false
+                                    if fileManager.fileExists(atPath: zusdkBundlePath, isDirectory: &isDir) && isDir.boolValue {
+                                        print("[ZUSDK] ✅ Swift: 找到 ZUSDK.bundle: \(zusdkBundlePath)")
+                                        if let bundle = Bundle(path: zusdkBundlePath) {
+                                            print("[ZUSDK] ✅ Swift: 成功创建 bundle: \(bundle.bundlePath)")
+                                            return bundle
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         
         // 列出模块 bundle 中的所有资源
         if let resourcePath = frameworkBundle.resourcePath {
@@ -177,10 +232,29 @@ public enum ZUSDKBasicWrapper {
         print("[ZUSDK] 📦 Swift: 找到 \(allBundles.count) 个 bundle")
         for b in allBundles {
             print("[ZUSDK] 📦 Swift: 检查 bundle: \(b.bundlePath)")
+            
+            // 跳过主应用 bundle（已经检查过了）
+            if b.bundlePath == Bundle.main.bundlePath {
+                continue
+            }
+            
+            // 在 framework bundle 中查找
             if let path = b.path(forResource: "ZUSDK", ofType: "bundle") {
                 print("[ZUSDK] ✅ Swift: 在 bundle 中找到 ZUSDK.bundle: \(path)")
                 if let bundle = Bundle(path: path) {
                     return bundle
+                }
+            }
+            
+            // 尝试在 framework 的 resourcePath 中查找
+            if let resourcePath = b.resourcePath {
+                let zusdkBundlePath = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
+                var isDirectory: ObjCBool = false
+                if FileManager.default.fileExists(atPath: zusdkBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                    print("[ZUSDK] ✅ Swift: 在 bundle resourcePath 中找到 ZUSDK.bundle: \(zusdkBundlePath)")
+                    if let bundle = Bundle(path: zusdkBundlePath) {
+                        return bundle
+                    }
                 }
             }
         }
