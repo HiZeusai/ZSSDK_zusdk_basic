@@ -27,8 +27,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "ZSCoreKit",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZSCoreKit_2.1.8.zip",
-            checksum: "b1a7482997675a26cf327048d6f87bcab5c3ecb4a1f8e354051e8e85d824e42f"
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZSCoreKit_2.1.8_20251125_173421.zip",
+            checksum: "a654f120373b6d02e1f6365f396db9b759af4227835a2ac39daa5cef85acb970"
         ),
         .binaryTarget(
             name: "channel_zeus",
