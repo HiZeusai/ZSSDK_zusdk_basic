@@ -21,16 +21,6 @@ let package = Package(
             checksum: "9d99e59750b15aa9ef4d87ba6fa4f80101e5d84f360d090ecfefc0c827cc70c6"
         ),
         .binaryTarget(
-            name: "ZSSDK",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZSSDK_2.1.8.zip",
-            checksum: "e78612868827e742b0a1b9095e2152704ec3e335a39810ac684150c48a9e5afe"
-        ),
-        .binaryTarget(
-            name: "ZSCoreKit",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZSCoreKit_2.1.8_20251125_173421.zip",
-            checksum: "a654f120373b6d02e1f6365f396db9b759af4227835a2ac39daa5cef85acb970"
-        ),
-        .binaryTarget(
             name: "channel_zeus",
             url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/channel_zeus_2.1.8.zip",
             checksum: "2185fd2651376c04537e01b95e5ec6f140dfd325218d192f9863909a9f377646"
@@ -54,9 +44,7 @@ let package = Package(
             name: "ZUSDKBasicWrapper",
             dependencies: [
                 "ZUSDKBasicWrapperOC",  // 依赖 Objective-C target
-                "ZSSDK",
                 "ZUSDK",
-                "ZSCoreKit",
                 "GApple",
                 "GGameCenter",
                 "channel_zeus"
