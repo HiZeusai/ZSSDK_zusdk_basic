@@ -15,46 +15,48 @@ public enum ZUSDKBasicWrapper {
     public static func image(named name: String, inDirectory directory: String = "Images") -> UIImage? {
         let bundle = ZUSDKBasicWrapper.bundle
         
-        // 方法1: 使用 UIImage(named:in:compatibleWith:) - 推荐方式
-        // 注意：图片名称需要包含 @2x/@3x 后缀，或者让系统自动选择
-        // 先尝试直接名称
-        if let image = UIImage(named: name, in: bundle, compatibleWith: nil) {
-            return image
-        }
+        // 注意：UIImage(named:in:compatibleWith:) 不会在子目录中查找，所以优先使用 pathForResource
         
-        // 方法2: 如果直接名称找不到，尝试添加 @2x 后缀
-        let nameWith2x = "\(name)@2x"
-        if let image = UIImage(named: nameWith2x, in: bundle, compatibleWith: nil) {
-            return image
-        }
-        
-        // 方法3: 尝试添加 @3x 后缀
-        let nameWith3x = "\(name)@3x"
-        if let image = UIImage(named: nameWith3x, in: bundle, compatibleWith: nil) {
-            return image
-        }
-        
-        // 方法4: 使用 pathForResource 手动加载
-        if let imagePath = bundle.path(forResource: name, ofType: "png", inDirectory: directory) {
-            if let image = UIImage(contentsOfFile: imagePath) {
-                return image
-            }
-        }
-        
-        // 方法5: 尝试带 @2x 的路径
+        // 方法1: 使用 pathForResource 查找 @2x 图片（优先，因为大多数设备使用 @2x）
         if let imagePath = bundle.path(forResource: "\(name)@2x", ofType: "png", inDirectory: directory) {
             if let image = UIImage(contentsOfFile: imagePath) {
                 return image
             }
         }
         
-        // 方法6: 尝试带 @3x 的路径
+        // 方法2: 使用 pathForResource 查找 @3x 图片
         if let imagePath = bundle.path(forResource: "\(name)@3x", ofType: "png", inDirectory: directory) {
             if let image = UIImage(contentsOfFile: imagePath) {
                 return image
             }
         }
         
+        // 方法3: 尝试查找不带后缀的图片（如果有的话）
+        if let imagePath = bundle.path(forResource: name, ofType: "png", inDirectory: directory) {
+            if let image = UIImage(contentsOfFile: imagePath) {
+                return image
+            }
+        }
+        
+        // 方法4: 尝试使用 UIImage(named:in:compatibleWith:) - 作为备用（虽然通常不会在子目录中工作）
+        // 先尝试直接名称
+        if let image = UIImage(named: name, in: bundle, compatibleWith: nil) {
+            return image
+        }
+        
+        // 方法5: 尝试添加 @2x 后缀
+        let nameWith2x = "\(name)@2x"
+        if let image = UIImage(named: nameWith2x, in: bundle, compatibleWith: nil) {
+            return image
+        }
+        
+        // 方法6: 尝试添加 @3x 后缀
+        let nameWith3x = "\(name)@3x"
+        if let image = UIImage(named: nameWith3x, in: bundle, compatibleWith: nil) {
+            return image
+        }
+        
+        // 只在找不到图片时输出警告
         print("[ZUSDK] ⚠️ 未找到图片: \(name) 在目录: \(directory)")
         return nil
     }
@@ -169,8 +171,6 @@ public enum ZUSDKBasicWrapper {
     /// 获取ZUSDK.bundle
     /// SPM会将资源打包到模块的bundle中，通过此方法可以正确访问ZUSDK.bundle
     public static var bundle: Bundle {
-        print("[ZUSDK] 🚀 Swift: bundle 属性被访问")
-        
         // 确保 bundle 已复制到主应用
         ensureInitialized()
         
@@ -178,24 +178,14 @@ public enum ZUSDKBasicWrapper {
         // 我们优先使用其他更可靠的方法
         
         // 方式1: 从主bundle中查找（优先，因为用户代码使用 Bundle.main）
-        print("[ZUSDK] 🔍 Swift: 方法1 - 从主 bundle 查找")
         if let bundlePath = Bundle.main.path(forResource: "ZUSDK", ofType: "bundle") {
-            print("[ZUSDK] 📦 Swift: 主 bundle 中找到路径: \(bundlePath)")
             if let bundle = Bundle(path: bundlePath) {
-                print("[ZUSDK] ✅ Swift: 成功创建 bundle: \(bundle.bundlePath)")
                 return bundle
-            } else {
-                print("[ZUSDK] ❌ Swift: 无法从路径创建 bundle: \(bundlePath)")
             }
-        } else {
-            print("[ZUSDK] ⚠️ Swift: 主 bundle 中未找到 ZUSDK.bundle")
         }
         
         // 方式2: 从当前模块的Resources中查找（SPM标准方式）
-        print("[ZUSDK] 🔍 Swift: 方法2 - 从模块 bundle 查找")
         let frameworkBundle = moduleBundle
-        print("[ZUSDK] 📦 Swift: 模块 bundle 路径: \(frameworkBundle.bundlePath)")
-        print("[ZUSDK] 📦 Swift: 模块 bundle resourcePath: \(frameworkBundle.resourcePath ?? "(nil)")")
         
         // 检查是否是主应用 bundle（说明 SPM 模块可能被编译成 framework）
         let mainBundlePath = Bundle.main.bundlePath
@@ -249,93 +239,98 @@ public enum ZUSDKBasicWrapper {
             }
         }
         
-        // 列出模块 bundle 中的所有资源
+        // SPM 会将资源 bundle 命名为 {PackageName}_{TargetName}.bundle
+        // 例如: ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle
         if let resourcePath = frameworkBundle.resourcePath {
-            print("[ZUSDK] 📂 Swift: 模块资源目录内容:")
-            let fileManager = FileManager.default
-            if let contents = try? fileManager.contentsOfDirectory(atPath: resourcePath) {
-                for item in contents {
-                    print("[ZUSDK] 📂   - \(item)")
+            let spmBundleName = "ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle"
+            let spmBundlePath = (resourcePath as NSString).appendingPathComponent(spmBundleName)
+            var isDirectory: ObjCBool = false
+            if FileManager.default.fileExists(atPath: spmBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                if let spmBundle = Bundle(path: spmBundlePath) {
+                    // 在 SPM bundle 中查找 ZUSDK.bundle
+                    if let zusdkBundlePath = spmBundle.path(forResource: "ZUSDK", ofType: "bundle") {
+                        if let zusdkBundle = Bundle(path: zusdkBundlePath) {
+                            return zusdkBundle
+                        }
+                    }
+                    // 如果 SPM bundle 本身就是资源 bundle，直接返回
+                    return spmBundle
                 }
             }
         }
         
         if let bundlePath = frameworkBundle.path(forResource: "ZUSDK", ofType: "bundle") {
-            print("[ZUSDK] 📦 Swift: 模块 bundle 中找到路径: \(bundlePath)")
             if let bundle = Bundle(path: bundlePath) {
-                print("[ZUSDK] ✅ Swift: 成功创建 bundle: \(bundle.bundlePath)")
                 return bundle
-            } else {
-                print("[ZUSDK] ❌ Swift: 无法从路径创建 bundle: \(bundlePath)")
             }
-        } else {
-            print("[ZUSDK] ⚠️ Swift: 模块 bundle 中未找到 ZUSDK.bundle")
-            
-            // 尝试直接查找资源目录
-            if let resourcePath = frameworkBundle.resourcePath {
-                let zusdkBundlePath = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
-                print("[ZUSDK] 🔍 Swift: 尝试直接路径: \(zusdkBundlePath)")
-                var isDirectory: ObjCBool = false
-                if FileManager.default.fileExists(atPath: zusdkBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
-                    print("[ZUSDK] ✅ Swift: 找到 ZUSDK.bundle 目录: \(zusdkBundlePath)")
-                    if let bundle = Bundle(path: zusdkBundlePath) {
-                        print("[ZUSDK] ✅ Swift: 成功创建 bundle: \(bundle.bundlePath)")
-                        return bundle
-                    }
-                } else {
-                    print("[ZUSDK] ❌ Swift: 路径不存在或不是目录")
+        }
+        
+        // 尝试直接查找资源目录
+        if let resourcePath = frameworkBundle.resourcePath {
+            let zusdkBundlePath = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
+            var isDirectory: ObjCBool = false
+            if FileManager.default.fileExists(atPath: zusdkBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                if let bundle = Bundle(path: zusdkBundlePath) {
+                    return bundle
                 }
             }
         }
         
         // 方式3: 从所有框架 bundle 中查找
-        print("[ZUSDK] 🔍 Swift: 方法3 - 从所有 bundle 查找")
         let allBundles = Bundle.allBundles
-        print("[ZUSDK] 📦 Swift: 找到 \(allBundles.count) 个 bundle")
         for b in allBundles {
             let bundlePath = b.bundlePath
-            print("[ZUSDK] 🔍 Swift: 检查 bundle: \(bundlePath)")
             
             // 跳过主应用 bundle（已经检查过了）
             if bundlePath == Bundle.main.bundlePath {
                 continue
             }
             
-            // 方法3a: 检查 bundle 路径本身是否就是 ZUSDK.bundle
-            if bundlePath.hasSuffix("ZUSDK.bundle") {
-                print("[ZUSDK] ✅ Swift: bundle 本身就是 ZUSDK.bundle: \(bundlePath)")
+            // 方法3a: 检查是否是 SPM 资源 bundle (ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle)
+            if bundlePath.hasSuffix("ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle") {
                 var isDirectory: ObjCBool = false
                 if FileManager.default.fileExists(atPath: bundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
-                    print("[ZUSDK] ✅ Swift: 直接使用找到的 ZUSDK.bundle: \(bundlePath)")
+                    // 在 SPM bundle 中查找 ZUSDK.bundle
+                    if let zusdkBundlePath = b.path(forResource: "ZUSDK", ofType: "bundle") {
+                        if let zusdkBundle = Bundle(path: zusdkBundlePath) {
+                            return zusdkBundle
+                        }
+                    }
+                    // 如果 SPM bundle 本身就是资源 bundle，直接返回
                     return b
                 }
             }
             
-            // 方法3b: 在 framework bundle 中查找
+            // 方法3b: 检查 bundle 路径本身是否就是 ZUSDK.bundle
+            if bundlePath.hasSuffix("ZUSDK.bundle") {
+                var isDirectory: ObjCBool = false
+                if FileManager.default.fileExists(atPath: bundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
+                    return b
+                }
+            }
+            
+            // 方法3c: 在 framework bundle 中查找
             if let path = b.path(forResource: "ZUSDK", ofType: "bundle") {
-                print("[ZUSDK] ✅ Swift: 在 bundle 中找到 ZUSDK.bundle: \(path)")
                 if let bundle = Bundle(path: path) {
                     return bundle
                 }
             }
             
-            // 方法3c: 检查 bundle 路径的父目录中是否有 ZUSDK.bundle
+            // 方法3d: 检查 bundle 路径的父目录中是否有 ZUSDK.bundle
             let parentDir = (bundlePath as NSString).deletingLastPathComponent
             let zusdkBundlePath = (parentDir as NSString).appendingPathComponent("ZUSDK.bundle")
             var isDirectory: ObjCBool = false
             if FileManager.default.fileExists(atPath: zusdkBundlePath, isDirectory: &isDirectory) && isDirectory.boolValue {
-                print("[ZUSDK] ✅ Swift: 在父目录找到 ZUSDK.bundle: \(zusdkBundlePath)")
                 if let bundle = Bundle(path: zusdkBundlePath) {
                     return bundle
                 }
             }
             
-            // 方法3d: 尝试在 framework 的 resourcePath 中查找
+            // 方法3e: 尝试在 framework 的 resourcePath 中查找
             if let resourcePath = b.resourcePath {
                 let zusdkBundlePath2 = (resourcePath as NSString).appendingPathComponent("ZUSDK.bundle")
                 var isDirectory2: ObjCBool = false
                 if FileManager.default.fileExists(atPath: zusdkBundlePath2, isDirectory: &isDirectory2) && isDirectory2.boolValue {
-                    print("[ZUSDK] ✅ Swift: 在 bundle resourcePath 中找到 ZUSDK.bundle: \(zusdkBundlePath2)")
                     if let bundle = Bundle(path: zusdkBundlePath2) {
                         return bundle
                     }
@@ -344,7 +339,6 @@ public enum ZUSDKBasicWrapper {
         }
         
         // 回退到模块bundle
-        print("[ZUSDK] ⚠️ Swift: 所有方法都失败，回退到模块 bundle: \(frameworkBundle.bundlePath)")
         return frameworkBundle
     }
 }

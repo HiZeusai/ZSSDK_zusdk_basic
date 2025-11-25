@@ -193,6 +193,7 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
     // 从模块 bundle 中查找（SPM 标准方式）
     NSBundle *moduleBundle = [NSBundle bundleForClass:[ZUSDKBasicWrapper class]];
     bundlePath = [moduleBundle pathForResource:@"ZUSDK" ofType:@"bundle"];
+    
     if (bundlePath && bundlePath.length > 0) {
         NSString *trimmedPath = [bundlePath stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if (trimmedPath.length > 0) {
@@ -208,13 +209,73 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
         }
     }
     
+    // 尝试在模块 bundle 的 resourcePath 中直接查找 SPM bundle
+    if (moduleBundle.resourcePath) {
+        // SPM 会将资源 bundle 命名为 {PackageName}_{TargetName}.bundle
+        // 例如: ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle
+        NSString *spmBundleName = @"ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle";
+        NSString *spmBundlePath = [moduleBundle.resourcePath stringByAppendingPathComponent:spmBundleName];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        BOOL isDirectory = NO;
+        BOOL exists = [fileManager fileExistsAtPath:spmBundlePath isDirectory:&isDirectory];
+        if (exists && isDirectory) {
+            NSBundle *spmBundle = [NSBundle bundleWithPath:spmBundlePath];
+            if (spmBundle) {
+                // 在 SPM bundle 中查找 ZUSDK.bundle
+                NSString *zusdkBundlePath = [spmBundle pathForResource:@"ZUSDK" ofType:@"bundle"];
+                if (zusdkBundlePath && zusdkBundlePath.length > 0) {
+                    NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath];
+                    if (zusdkBundle) {
+                        return zusdkBundle;
+                    }
+                }
+                // 如果 SPM bundle 本身就是资源 bundle，直接返回
+                return spmBundle;
+            }
+        }
+        
+        // 也尝试直接查找 ZUSDK.bundle（向后兼容）
+        NSString *zusdkBundlePath = [moduleBundle.resourcePath stringByAppendingPathComponent:@"ZUSDK.bundle"];
+        BOOL isDirectory2 = NO;
+        BOOL exists2 = [fileManager fileExistsAtPath:zusdkBundlePath isDirectory:&isDirectory2];
+        if (exists2 && isDirectory2) {
+            NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath];
+            if (zusdkBundle) {
+                return zusdkBundle;
+            }
+        }
+    }
+    
     // 从所有框架 bundle 中查找
     NSArray *allBundles = [NSBundle allBundles];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     for (NSBundle *bundle in allBundles) {
         NSString *bundlePath = bundle.bundlePath;
         
-        // 方法3a: 检查 bundle 路径本身是否就是 ZUSDK.bundle 或包含 ZUSDK.bundle
+        // 跳过主应用 bundle（已经检查过了）
+        if ([bundlePath isEqualToString:[NSBundle mainBundle].bundlePath]) {
+            continue;
+        }
+        
+        // 方法3a: 检查是否是 SPM 资源 bundle (ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle)
+        if ([bundlePath hasSuffix:@"ZSSDK_zusdk_basic_ZUSDKBasicWrapper.bundle"]) {
+            BOOL isDirectory = NO;
+            BOOL exists = [fileManager fileExistsAtPath:bundlePath isDirectory:&isDirectory];
+            if (exists && isDirectory) {
+                // 在 SPM bundle 中查找 ZUSDK.bundle
+                NSString *zusdkBundlePath = [bundle pathForResource:@"ZUSDK" ofType:@"bundle"];
+                if (zusdkBundlePath && zusdkBundlePath.length > 0) {
+                    NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath];
+                    if (zusdkBundle) {
+                        return zusdkBundle;
+                    }
+                }
+                // 如果 SPM bundle 本身就是资源 bundle，直接返回
+                return bundle;
+            }
+        }
+        
+        // 方法3b: 检查 bundle 路径本身是否就是 ZUSDK.bundle
         if ([bundlePath hasSuffix:@"ZUSDK.bundle"]) {
             BOOL isDirectory = NO;
             BOOL exists = [fileManager fileExistsAtPath:bundlePath isDirectory:&isDirectory];
@@ -223,7 +284,7 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
             }
         }
         
-        // 方法3b: 在 bundle 内部查找 ZUSDK.bundle 资源
+        // 方法3c: 在 bundle 内部查找 ZUSDK.bundle 资源
         NSString *path = [bundle pathForResource:@"ZUSDK" ofType:@"bundle"];
         if (path && path.length > 0) {
             NSString *trimmedPath = [path stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -239,7 +300,7 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
             }
         }
         
-        // 方法3c: 检查 bundle 路径的父目录中是否有 ZUSDK.bundle
+        // 方法3d: 检查 bundle 路径的父目录中是否有 ZUSDK.bundle
         NSString *parentDir = [bundlePath stringByDeletingLastPathComponent];
         NSString *zusdkBundlePath = [parentDir stringByAppendingPathComponent:@"ZUSDK.bundle"];
         BOOL zusdkExists = [fileManager fileExistsAtPath:zusdkBundlePath isDirectory:NULL];
@@ -247,6 +308,18 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
             NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath];
             if (zusdkBundle) {
                 return zusdkBundle;
+            }
+        }
+        
+        // 方法3e: 尝试在 bundle 的 resourcePath 中查找
+        if (bundle.resourcePath) {
+            NSString *zusdkBundlePath2 = [bundle.resourcePath stringByAppendingPathComponent:@"ZUSDK.bundle"];
+            BOOL zusdkExists2 = [fileManager fileExistsAtPath:zusdkBundlePath2 isDirectory:NULL];
+            if (zusdkExists2) {
+                NSBundle *zusdkBundle = [NSBundle bundleWithPath:zusdkBundlePath2];
+                if (zusdkBundle) {
+                    return zusdkBundle;
+                }
             }
         }
     }
@@ -332,40 +405,38 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
         return nil;
     }
     
-    // 方法1: 使用 pathForResource 手动加载（优先，因为图片在 Images 子目录中）
-    NSString *imagePath = [zusdkBundle pathForResource:name ofType:@"png" inDirectory:imageDirectory];
-    if (imagePath) {
-        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-        if (image) {
-            return image;
-        }
-    }
-    
-    // 方法2: 尝试不带扩展名
-    if (!imagePath || imagePath.length == 0) {
-        imagePath = [zusdkBundle pathForResource:name ofType:nil inDirectory:imageDirectory];
-        if (imagePath) {
-            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-            if (image) {
-                return image;
-            }
-        }
-    }
-    
-    // 方法3: 尝试带 @2x 的路径
+    // 方法1: 使用 pathForResource 查找 @2x 图片（优先，因为大多数设备使用 @2x）
     NSString *nameWith2x = [NSString stringWithFormat:@"%@@2x", name];
-    imagePath = [zusdkBundle pathForResource:nameWith2x ofType:@"png" inDirectory:imageDirectory];
-    if (imagePath) {
+    NSString *imagePath = [zusdkBundle pathForResource:nameWith2x ofType:@"png" inDirectory:imageDirectory];
+    if (imagePath && imagePath.length > 0) {
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
             return image;
         }
     }
     
-    // 方法4: 尝试带 @3x 的路径
+    // 方法2: 使用 pathForResource 查找 @3x 图片
     NSString *nameWith3x = [NSString stringWithFormat:@"%@@3x", name];
     imagePath = [zusdkBundle pathForResource:nameWith3x ofType:@"png" inDirectory:imageDirectory];
-    if (imagePath) {
+    if (imagePath && imagePath.length > 0) {
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+        if (image) {
+            return image;
+        }
+    }
+    
+    // 方法3: 尝试查找不带后缀的图片（如果有的话）
+    imagePath = [zusdkBundle pathForResource:name ofType:@"png" inDirectory:imageDirectory];
+    if (imagePath && imagePath.length > 0) {
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+        if (image) {
+            return image;
+        }
+    }
+    
+    // 方法4: 尝试不带扩展名
+    imagePath = [zusdkBundle pathForResource:name ofType:nil inDirectory:imageDirectory];
+    if (imagePath && imagePath.length > 0) {
         UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         if (image) {
             return image;
@@ -378,6 +449,7 @@ static NSString * (*original_pathForResource_ofType_)(id, SEL, NSString *, NSStr
         return image;
     }
     
+    // 只在找不到图片时输出警告
     NSLog(@"[ZUSDK] ⚠️ 未找到图片: %@ 在目录: %@", name, imageDirectory);
     return nil;
 }
