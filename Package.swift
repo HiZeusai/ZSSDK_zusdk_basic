@@ -22,27 +22,27 @@ let package = Package(
         ),
         .binaryTarget(
             name: "ZSSDK",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.7/ZSSDK.xcframework.zip",
-            checksum: "ea15641ea51036e64c74b8a18d2d9c06e5451698c741901bd4c21b0433634b12"
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZSSDK_2.1.8.zip",
+            checksum: "e78612868827e742b0a1b9095e2152704ec3e335a39810ac684150c48a9e5afe"
         ),
         .binaryTarget(
             name: "ZSCoreKit",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.7/ZSCoreKit.xcframework.zip",
-            checksum: "e8a951b0a8eb203af442c7b28a6f59f5546d34eb38cdd117eeff92abd5e34732"
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/ZSCoreKit_2.1.8.zip",
+            checksum: "b7c5a50cf6bac3563b9e3b71b4837d3824a0f7ebb0d2cb6ad38f1d2d4282fd21"
         ),
         .binaryTarget(
             name: "channel_zeus",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/channel_zeus_2.1.8_fixbundle.zip",
-            checksum: "a6443fbf3d5b26efb6ebcc0f54049b77d7618676adbc7964a46af2443b7f8367"
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/channel_zeus_2.1.8.zip",
+            checksum: "2185fd2651376c04537e01b95e5ec6f140dfd325218d192f9863909a9f377646"
         ),
         .binaryTarget(
             name: "GApple",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/GApple_2.1.8_fixbundle.zip",
-            checksum: "bd26ca1f782244e2c09e38fa1964247ddd18181f36492d751e41cf8587547166"
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/GApple_2.1.8.zip",
+            checksum: "8aede9c1259415cf9fabb608899770a2c45bdc11adb57a7c1aedcc4f64f3e9d6"
         ),
         .binaryTarget(
             name: "GGameCenter",
-            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/GGameCenter_2.1.8_fixbundle.zip",
+            url: "https://github.com/HiZeusai/SDKPackage/releases/download/2.1.8/GGameCenter_2.1.8.zip",
             checksum: "c3be7d42b3a577addf0ce453823d78587640144ae9c004259fbfc274f890488f"
         ),
         .target(
